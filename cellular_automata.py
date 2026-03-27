@@ -29,31 +29,42 @@ class CellularAutomata(object):
         result_base = self.base_xor2(mid_base, base3)
         return result_base
 
-    def rule_90(self, state_seq):
-        new_state = list(state_seq)
-        seq_length = len(state_seq)
-        for i in range(0, seq_length):
-            if i == 0:
-                new_state[i] = self.base_xor2(state_seq[seq_length - 1], state_seq[i + 1])
-            if i == seq_length - 1:
-                new_state[i] = self.base_xor2(state_seq[i - 1], state_seq[0])
-            else:
-                new_state[i] = self.base_xor2(state_seq[i - 1], state_seq[i + 1])
-        new_state = ''.join(new_state)
-        return new_state
+def rule_90(self, state_seq):
+    new_state = list(state_seq)
+    seq_length = len(state_seq)
+    for i in range(0, seq_length):
+        if i == 0:
+            left_neighbor = 'A'
+            right_neighbor = state_seq[i + 1]
+        elif i == seq_length - 1:
+            left_neighbor = state_seq[i - 1]
+            right_neighbor = 'A'
+        else:
+            left_neighbor = state_seq[i - 1]
+            right_neighbor = state_seq[i + 1]
+        new_state[i] = self.base_xor2(left_neighbor, right_neighbor)
+    new_state = ''.join(new_state)
+    return new_state
 
-    def rule_150(self, state_seq):
-        new_state = list(state_seq)
-        seq_length = len(state_seq)
-        for i in range(0, seq_length):
-            if i == 0:
-                new_state[i] = self.base_xor3(state_seq[seq_length - 1], state_seq[i], state_seq[i + 1])
-            if i == seq_length - 1:
-                new_state[i] = self.base_xor3(state_seq[i - 1], state_seq[i], state_seq[0])
-            else:
-                new_state[i] = self.base_xor3(state_seq[i - 1], state_seq[i], state_seq[i + 1])
-        new_state = ''.join(new_state)
-        return new_state
+def rule_150(self, state_seq):
+    new_state = list(state_seq)
+    seq_length = len(state_seq)
+    for i in range(0, seq_length):
+        if i == 0:
+            left_neighbor = 'A'
+            mid_neighbor = state_seq[i]
+            right_neighbor = state_seq[i + 1]
+        elif i == seq_length - 1:
+            left_neighbor = state_seq[i - 1]
+            mid_neighbor = state_seq[i]
+            right_neighbor = 'A'
+        else:
+            left_neighbor = state_seq[i - 1]
+            mid_neighbor = state_seq[i]
+            right_neighbor = state_seq[i + 1]
+        new_state[i] = self.base_xor3(left_neighbor, mid_neighbor, right_neighbor)
+    new_state = ''.join(new_state)
+    return new_state
 
     def not_satisfy_gc(self, seq):
         # gc_percent = 0.00
